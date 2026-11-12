@@ -32,6 +32,20 @@ def test_reading_a_total_does_not_add_a_player() -> None:
     assert client.get("/leaderboard").json() == []
 
 
+def test_stats_empty() -> None:
+    r = client.get("/stats")
+    assert r.status_code == 200
+    assert r.json() == {"players": 0, "average": 0.0}
+    assert isinstance(r.json()["average"], float)
+
+
+def test_stats_counts_players_and_averages_totals() -> None:
+    client.post("/scores", json={"name": "ana", "points": 10})
+    client.post("/scores", json={"name": "ana", "points": 5})
+    client.post("/scores", json={"name": "leo", "points": 30})
+    assert client.get("/stats").json() == {"players": 2, "average": 22.5}
+
+
 def test_rejects_bad_input() -> None:
     assert client.post("/scores", json={"name": "", "points": 10}).status_code == 422
     assert client.get("/leaderboard?limit=0").status_code == 422
