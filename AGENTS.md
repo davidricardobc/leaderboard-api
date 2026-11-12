@@ -16,3 +16,9 @@ Small FastAPI app: a community-event leaderboard. In-memory store, no database.
 - Phase state lives in `.factory/` as markdown files. Never put plan or review text in code comments.
 - Only the paths in SCOPE (factory.conf) may change. Do not touch factory.sh, lib/, gates/, .claude/ or this file.
 - Security: no eval/exec, no shell calls from endpoints, validate all inputs with pydantic.
+
+## Team rules (David's factory)
+- Read the narrowest reasonable version of the ticket. If it needs a new dependency, plan only what the installed packages allow and list the rest under Out of scope.
+- One test per behaviour. No duplicate or "surplus" tests that check the same thing twice.
+- Never write raw input, secrets or personal data to files or logs.
+- Update README.md usage only if the CLI output or flags change.
